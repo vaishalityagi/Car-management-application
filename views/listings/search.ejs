@@ -1,0 +1,18 @@
+<% layout("/layouts/boilerplate") %>
+
+<h1>Search result for "<%= searchQuery %>"</h1>
+<% if(allListings.length >0) { %>
+    <ul>
+        <% allListings.forEach(listing => { %>
+            <li>
+                <a href="/listings/<%= listing._id %>">  <%= listing.title %></a>
+            </li>
+
+       <% }) %>
+
+    </ul>
+ <% } else{ %>
+<p>No listings found.</p>
+ <% } %>
+
+ <a href="/listings">BACK TO ALL LISTINGS</a>

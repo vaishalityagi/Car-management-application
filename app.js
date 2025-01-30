@@ -34,6 +34,7 @@ const userRouter = require("./routes/user.js");
 
 // main().catch(err => console.log(err));
 const dbUrl = process.env.ATLASDB_URL;
+// const MONGO_URL = "mongodb://127.0.0.1:27017/cars";
 
 app.engine('ejs', ejsMate);
 main().then(()=>{
@@ -42,11 +43,11 @@ main().then(()=>{
     console.log(err);
 });
 async function main() {
-    await mongoose.connect(dbUrl,);
+    await mongoose.connect(dbUrl);
   };
 app.set("view engine","ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true})); //to parse the request data
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 

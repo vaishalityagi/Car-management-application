@@ -42,10 +42,9 @@
             <input name="listing[image]" placeholder="enter image URL/LINK" type="text" class="form-control">
 
         </div> -->
-
         <div class="mb-3">
             <label for="image" class="form-label">Upload Listing Image </label>
-            <input name="listing[image]"  type="file" class="form-control" required />
+            <input name="listing[image]"  type="file" class="form-control" multiple required />
 
         </div>
         <!-- <br /><br /> -->
@@ -62,19 +61,28 @@
        
         <!-- <br /><br /> -->
         <div class="mb-3 col-md-8">
-            <label for="country" class="form-label">Country</label>
-            <input name="listing[country]" placeholder="enter country" type="text" class="form-control" required >
+            <label for="company" class="form-label">Company Name</label>
+            <input name="listing[company]" placeholder="enter Company name" type="text" class="form-control" required >
             <div class="invalid-feedback">
-                Please enter the valid country name.
+                Please enter the valid company name.
               </div>
         </div>
     </div>
         <!-- <br /><br /> -->
         <div class="mb-3">
-            <label for="location" class="form-label">Location</label>
-            <input name="listing[location]" placeholder="enter location" type="text" class="form-control" required>
+            <label for="dealer" class="form-label">Dealer</label>
+            <input name="listing[dealer]" placeholder="enter dealer name" type="text" class="form-control" required>
             <div class="invalid-feedback">
-                Please enter the valid location.
+                Please enter the valid Dealer.
+              </div>
+
+        </div>
+
+        <div class="mb-3">
+            <label for="cartype" class="form-label">Cartype</label>
+            <input name="listing[cartype]" placeholder="enter cartype " type="text" class="form-control" required>
+            <div class="invalid-feedback">
+                Please enter the valid cartype.
               </div>
 
         </div>

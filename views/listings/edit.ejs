@@ -39,10 +39,47 @@
          </div>
        
         <!-- <br /><br /> -->
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             Original Listing Image <br />
-        <img src="<%= listing.image.url %>" width="200" height="200"/>
-         </div>
+
+        <% if (listing.image.length > 0) { %>
+            <div class="image-gallery">
+              <% listing.image.forEach(image => { %>
+                  <img src="<%= image.url %>" class="card-img-top" alt="Listing Image" style="height: 10rem; width: 100%; object-fit: cover; margin-bottom: 5px;">
+              <% }) %>
+          </div>
+        <% } %>
+        
+         </div> -->
+
+        <div class="mb-3">
+            Original Images
+        <% if (listing.image.length > 1) { %>
+          <!-- Carousel for multiple images -->
+          <div id="listingImageCarousel<%= listing._id %>" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% listing.image.forEach((image, index) => { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                  <img src="<%= image.url %>" class="card-img-top" alt="Listing Image" style="height: 10rem; width: 100%; object-fit: cover; margin-bottom: 5px;">
+                </div>
+              <% }) %>
+            </div>
+            <!-- Controls for navigating the carousel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#listingImageCarousel<%= listing._id %>" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#listingImageCarousel<%= listing._id %>" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        <% } else if (listing.image.length === 1) { %>
+          <!-- Display single image if only one image exists -->
+          <img src="<%= listing.image[0].url %>" class="card-img-top" alt="Listing Image" style="height: 10rem; width: 100%; object-fit: cover; margin-bottom: 5px;">
+        <% } %>
+      </div>
+          
         <div class="mb-3">
             <label for="image" class="form-label">Upload new Image</label>
             <input name="listing[image]" type="file" class="form-control" >
@@ -61,20 +98,27 @@
              </div>
             <!-- <br /><br /> -->
             <div class="mb-3 col-md-8">
-                <label for="country" class="form-label">Country</label>
-                <input name="listing[country]" value="<%= listing.country %>" type="text" class="form-control" required>
+                <label for="company" class="form-label">Company</label>
+                <input name="listing[company]" value="<%= listing.company %>" type="text" class="form-control" required>
                 <div class="invalid-feedback">
-                    Please enter the valid country name.
+                    Please enter the valid company name.
                   </div>
              </div>
         </div>
         
         <!-- <br /><br /> -->
         <div class="mb-3">
-            <label for="location" class="form-label">Location</label>
-            <input name="listing[location]" value="<%= listing.location %>" type="text" class="form-control" required >
+            <label for="dealer" class="form-label">Dealer</label>
+            <input name="listing[dealer]" value="<%= listing.dealer %>" type="text" class="form-control" required >
             <div class="invalid-feedback">
-                Please enter the valid location.
+                Please enter the valid Dealer.
+              </div>
+         </div>
+         <div class="mb-3">
+            <label for="cartype" class="form-label">CarType</label>
+            <input name="listing[cartype]" value="<%= listing.cartype %>" type="text" class="form-control" required >
+            <div class="invalid-feedback">
+                Please enter the valid CarType.
               </div>
          </div>
         <br /><br />

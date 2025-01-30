@@ -16,7 +16,7 @@ module.exports.signUp =async(req,res)=>{
         if(err){
             next(err);
         }
-        req.flash("success","Welcome to wanderlust!");
+        req.flash("success","Welcome to Cars portal!");
         res.redirect("/listings");
     });
     }catch(err){
@@ -31,7 +31,7 @@ module.exports.renderLoginForm =(req,res)=>{
 };
 
 module.exports.login =(req,res)=>{
-    req.flash("success","Welcome back to wanderlust! You are logged in!");
+    req.flash("success","Welcome back to Car Management Application! You are logged in!");
     let redirectUrl =  res.locals.redirectUrl || "/listings";
     res.redirect(redirectUrl);
 

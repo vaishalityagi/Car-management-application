@@ -6,6 +6,28 @@ module.exports.index = async(req,res)=>{
     res.render("listings/index.ejs" , {allListings});
 };
 
+module.exports.search = async(req,res)=>{
+     // Get the search query from the request (e.g., ?search=query)
+     let searchQuery = req.query.query ;  // Default to empty string if no search is provided!
+console.log(searchQuery);
+     if(!searchQuery){
+        return res.redirect("/listings");
+     }
+
+     // Use the search query to filter the listings, assuming you want to search by title or name
+     const allListings = await Listing.find({
+         title: { $regex: searchQuery, $options: 'i' } // Case-insensitive search
+     });
+
+     if(allListings.length === 1){
+        return res.redirect(`/listings/${allListings[0]._id}`);
+     }
+ 
+     // Log the filtered listings to the console
+     console.log(allListings);
+     res.render('listings/search.ejs', { searchQuery ,allListings });
+};
+
 module.exports.renderNewForm = (req,res)=>{
     // console.log(req.user);
     res.render("listings/new.ejs");
@@ -23,30 +45,49 @@ module.exports.showListing =async(req,res)=>{
     res.render("listings/show.ejs",{listing});
 };
 
+// module.exports.createListing=async(req,res,next)=>{
+//     let url = req.file.path;
+//     let filename =  req.file.filename;
+//     console.log(url,'...', filename);
+    
+//     const newListing = new Listing (req.body.listing);
+//     newListing.owner = req.user._id;
+//     newListing.image ={url,filename};
+//      console.log(newListing);
+    
+//     await newListing.save();
+//     req.flash("success","New listing created");
+//     res.redirect("/listings");
+
+// };
+
 module.exports.createListing=async(req,res,next)=>{
-    let url = req.file.path;
-    let filename =  req.file.filename;
-    console.log(url,'...', filename);
-    // let listing = req.body.listing;
-    // if(!req.body.listing){
-    //     throw new ExpressError(400, "Send valid data for listing");
-    // }
-   
+    console.log(req.files); // Logs uploaded images
+
+    if (!req.files || req.files.length === 0) {
+        throw new Error("No images uploaded");
+    };
+
+    // Map uploaded files into { url, filename } format
+    const imageFiles = req.files.map(file => ({
+        url: file.path,
+        filename: file.filename
+    }));
+    // let url = req.file.path;
+    // let filename =  req.file.filename;
+    // console.log(url,'...', filename);
+    
     const newListing = new Listing (req.body.listing);
     newListing.owner = req.user._id;
-    newListing.image ={url,filename};
+    newListing.image =imageFiles;
      console.log(newListing);
-    // if(!newListing.title){
-    //     throw new ExpressError(400, "Title is missing");
-    // }
+    
     await newListing.save();
-    // console.log(listing);
     req.flash("success","New listing created");
     res.redirect("/listings");
 
-
-
 };
+
 
 module.exports.renderEditForm =async(req,res)=>{
     let {id } = req.params;
